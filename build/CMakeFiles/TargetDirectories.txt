@@ -1,3 +1,0 @@
-D:/_CG/lunarenderer/build/CMakeFiles/lunarenderer.dir
-D:/_CG/lunarenderer/build/CMakeFiles/edit_cache.dir
-D:/_CG/lunarenderer/build/CMakeFiles/rebuild_cache.dir

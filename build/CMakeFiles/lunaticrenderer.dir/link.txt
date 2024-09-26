@@ -1,3 +1,0 @@
-"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\lunaticrenderer.dir/objects.a
-D:\mingw64\bin\ar.exe qc CMakeFiles\lunaticrenderer.dir/objects.a @CMakeFiles\lunaticrenderer.dir\objects1.rsp
-D:\mingw64\bin\g++.exe  -fopenmp -g -Wl,--whole-archive CMakeFiles\lunaticrenderer.dir/objects.a -Wl,--no-whole-archive -o lunaticrenderer.exe -Wl,--out-implib,liblunaticrenderer.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\lunaticrenderer.dir\linkLibs.rsp
