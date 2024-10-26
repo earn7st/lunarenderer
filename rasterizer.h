@@ -17,6 +17,8 @@ private:
 
     std::function<Eigen::Vector3f(fragment_shader_payload)> fragment_shader;
 
+    std::optional<Texture> texture;    
+
     std::vector<float> depth_buf;
     std::vector<Eigen::Vector3f> frame_buf;
 
@@ -28,6 +30,7 @@ public:
     void setViewMat(Eigen::Matrix4f mat);
     void setProjMat(Eigen::Matrix4f mat);
     void setFragmentShader(std::function<Eigen::Vector3f(fragment_shader_payload)> frag_shader);
+    void setTexture(Texture tex);
 
     int get_index(int x, int y);
     Eigen::Vector3f getFrameBuf(int i);

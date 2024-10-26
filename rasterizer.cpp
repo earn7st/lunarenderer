@@ -5,7 +5,10 @@
 
 extern TGAImage framebuffer;
 
-rasterizer::rasterizer(int width, int height) : width(width), height(height) {}
+rasterizer::rasterizer(int width, int height) : width(width), height(height) {
+    frame_buf.resize(width * height);
+    depth_buf.resize(width * height);
+}
 
 void rasterizer::clear() {
     std::fill(frame_buf.begin(), frame_buf.end(), Eigen::Vector3f{0, 0, 0});
@@ -24,6 +27,10 @@ void rasterizer::setProjMat(Eigen::Matrix4f mat) {
 
 void rasterizer::setFragmentShader(std::function<Eigen::Vector3f(fragment_shader_payload)> frag_shader) {
     fragment_shader = frag_shader;
+}
+
+void rasterizer::setTexture(Texture tex) {
+    texture = tex;
 }
 
 int rasterizer::get_index(int x, int y) {
@@ -91,7 +98,7 @@ static Eigen::Vector2f interpolate(
 
 void rasterizer::render(std::vector<Triangle *> triangleList) {
     Eigen::Matrix4f mvpMat = projMat * viewMat * modelMat;
-    Eigen::Matrix4f Object2WorldNormal = (viewMat * modelMat).inverse().transpose();
+    Eigen::Matrix4f Object2ViewNormal = (viewMat * modelMat).inverse().transpose();
     for (int i = 0; i < triangleList.size(); i++) {
         Triangle *t = triangleList[i];
         Triangle newTri = *t;
@@ -113,17 +120,15 @@ void rasterizer::render(std::vector<Triangle *> triangleList) {
             vec.w() = 1.0f;
         }
 
-        printf("%f %f %f\n", v[0].x(), v[0].y(), v[0].z());
-
         for (auto &vec : v) {
             vec.x() = (vec.x() + 1) * width * 0.5;
             vec.y() = (vec.y() + 1) * height * 0.5;
         }
 
         Eigen::Vector4f n[] = {
-            Object2WorldNormal * Eigen::Vector4f(t->norm(0).x(), t->norm(0).y(), t->norm(0).z(), 0.0f),
-            Object2WorldNormal * Eigen::Vector4f(t->norm(1).x(), t->norm(1).y(), t->norm(1).z(), 0.0f),
-            Object2WorldNormal * Eigen::Vector4f(t->norm(2).x(), t->norm(2).y(), t->norm(2).z(), 0.0f)};
+            Object2ViewNormal * Eigen::Vector4f(t->norm(0).x(), t->norm(0).y(), t->norm(0).z(), 0.0f),
+            Object2ViewNormal * Eigen::Vector4f(t->norm(1).x(), t->norm(1).y(), t->norm(1).z(), 0.0f),
+            Object2ViewNormal * Eigen::Vector4f(t->norm(2).x(), t->norm(2).y(), t->norm(2).z(), 0.0f)};
 
         for (int j = 0; j < 3; j++) {
             newTri.setVertex(v[j], j);
@@ -140,7 +145,6 @@ void rasterizer::drawTriangle(const Triangle &t, std::array<Eigen::Vector3f, 3> 
     std::array<Eigen::Vector4f, 3> v = t.toVec4();
 
     float minPix[2] = {float(width + 1), float(height + 1)}, maxPix[2] = {0, 0};
-
     for (int i = 0; i < 3; i++) {
         minPix[0] = std::min(minPix[0], v[i].x());
         minPix[1] = std::min(minPix[1], v[i].y());
@@ -159,7 +163,7 @@ void rasterizer::drawTriangle(const Triangle &t, std::array<Eigen::Vector3f, 3> 
                 int ind = get_index(x, y);
                 if (depth_buf[ind] > zp) {
                     depth_buf[ind] = zp;
-                    Eigen::Vector3f interpolated_color = Eigen::Vector3f(148, 121.0, 92.0);
+                    Eigen::Vector3f interpolated_color = Eigen::Vector3f{88, 57, 39};
 
                     Eigen::Vector2f interpolated_texcoords =
                         interpolate(alpha, beta, gamma, t.tex(0), t.tex(1), t.tex(2), 1);
@@ -171,7 +175,10 @@ void rasterizer::drawTriangle(const Triangle &t, std::array<Eigen::Vector3f, 3> 
                         alpha, beta, gamma, viewSpaceVertexs[0], viewSpaceVertexs[1], viewSpaceVertexs[2], 1);
 
                     fragment_shader_payload payload(
-                        interpolated_color, interpolated_normals, interpolated_texcoords, interpolated_vs_pos);
+                        interpolated_color,
+                        interpolated_normals.normalized(),
+                        interpolated_texcoords,
+                        interpolated_vs_pos);
 
                     Eigen::Vector3f pixel_color = fragment_shader(payload);
                     frame_buf[ind] = pixel_color;

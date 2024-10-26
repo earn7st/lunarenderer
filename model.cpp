@@ -53,7 +53,7 @@ Model::Model(const char* filename)
 			norms_.push_back(norm);
 		}
 	}
-	std::cerr << "# v# " << verts_.size() << " f# " << faces_.size()
+	std::cerr << "# v# " << verts_.size() << " f# " << faces_.size() << " vt# " << texcoords_.size() << " vn# " << normals_.size()
 	          << std::endl;
 }
 
