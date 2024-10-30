@@ -5,7 +5,6 @@
 #include "triangle.h"
 #include "texture.hpp"
 #include "light.h"
-#include <Eigen/Eigen>
 #include <cmath>
 #include <iostream>
 #include <vector>
@@ -99,7 +98,7 @@ int main(int argc, char **argv) {
     rasterizer r(width, height);
     r.clear();
 
-    std::function<Eigen::Vector3f(fragment_shader_payload)> active_shader = blinn_phong_fragment_shader;
+    std::function<Eigen::Vector3f(fragment_shader_payload)> active_shader = texture_fragment_shader;
 
     r.setModelMat(getModelMat(angle));
     r.setViewMat(getViewMat(cameraPos, cameraLookat, cameraUp));

@@ -2,7 +2,7 @@
 
 #define _TRIANGLE_H_
 
-#include <Eigen/Eigen>
+#include <eigen/include/eigen3/Eigen/Eigen>
 
 class Triangle {
 private:

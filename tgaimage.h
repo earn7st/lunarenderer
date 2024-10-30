@@ -4,6 +4,8 @@
 #include <fstream>
 #include <vector>
 
+#pragma pack(push)
+#pragma pack(1)
 struct TGAHeader {
     std::uint8_t  idlength = 0;
     std::uint8_t  colormaptype = 0;
@@ -18,6 +20,7 @@ struct TGAHeader {
     std::uint8_t  bitsperpixel = 0;
     std::uint8_t  imagedescriptor = 0;
 };
+#pragma pack(pop)
 
 struct TGAColor {
     std::uint8_t bgra[4] = {0,0,0,0};

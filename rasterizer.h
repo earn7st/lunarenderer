@@ -4,7 +4,7 @@
 #include "model.h"
 #include "shader.hpp"
 #include "triangle.h"
-#include <Eigen/Eigen>
+#include <eigen/include/eigen3/Eigen/Eigen>
 
 class rasterizer {
 private:

@@ -21,7 +21,6 @@ bool TGAImage::read_tga_file(const std::string filename) {
     w = header.width;
     h = header.height;
     bpp = header.bitsperpixel >> 3;
-
     if (w <= 0 || h <= 0 || (bpp != GRAYSCALE && bpp != RGB && bpp != RGBA)) {
         std::cerr << "bad bpp (or width/height) value\n";
         return false;

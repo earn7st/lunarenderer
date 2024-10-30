@@ -1,5 +1,4 @@
 #include "triangle.h"
-#include <Eigen/Eigen>
 
 void Triangle::setVertex(Eigen::Vector4f v, int k) {
     this->vertex[k] = v;

@@ -1,8 +1,8 @@
 #ifndef __MODEL_H__
 #define __MODEL_H__
 
-#include <Eigen/Eigen>
 #include <vector>
+#include <eigen/include/eigen3/Eigen/Eigen>
 
 class Model {
 private:
