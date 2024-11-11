@@ -1,9 +1,4 @@
-#include "model.h"
-#include <fstream>
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <vector>
+#include "lunarender.h"
 
 Model::Model(const char* filename)
     : verts_()

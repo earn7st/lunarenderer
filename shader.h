@@ -2,7 +2,6 @@
 #define _SHADER_H_
 
 #include "texture.hpp"
-#include "rasterizer.h"
 
 struct fragment_shader_payload {
     fragment_shader_payload() {

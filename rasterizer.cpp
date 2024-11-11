@@ -1,7 +1,4 @@
-#include "rasterizer.h"
-#include "shader.hpp"
-#include "tgaimage.h"
-#include "triangle.h"
+#include "lunarender.h"
 
 extern TGAImage framebuffer;
 

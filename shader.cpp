@@ -1,6 +1,6 @@
-#include "rasterizer.h"
+#include <eigen/include/eigen3/Eigen/Eigen>
+#include "shader.h"
 #include "light.h"
-#include "shader.hpp"
 
 extern struct light li;
 
@@ -61,7 +61,8 @@ Eigen::Vector3f texture_fragment_shader(const fragment_shader_payload &payload) 
         (ks.array() * (li.intensity / r_2).array() * std::pow(std::max(0.0f, normal.dot(h)), p)).matrix();
 
     Eigen::Vector3f result_color{0, 0, 0};
-    result_color += ambient + diffuse + specular;
+    //result_color += ambient + diffuse + specular;
+    result_color += ambient + diffuse;
 
     return result_color * 255.f;
 }

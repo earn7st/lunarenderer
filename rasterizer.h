@@ -2,7 +2,7 @@
 
 #define _RASTERIZER_H_
 #include "model.h"
-#include "shader.hpp"
+#include "shader.h"
 #include "triangle.h"
 #include <eigen/include/eigen3/Eigen/Eigen>
 
