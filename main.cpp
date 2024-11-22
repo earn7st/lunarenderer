@@ -1,7 +1,7 @@
 #include "lunarender.h"
 
-const int width = 800;
-const int height = 800;
+const int width = 1000;
+const int height = 1000;
 const float MY_PI = 3.1415;
 const int FOV = 45;
 const float eyeRatio = 1;
@@ -12,7 +12,7 @@ const float angle = 0;
 struct light li = {.color = Eigen::Vector3f(255.0, 255.0, 255.0),
                    .position = Eigen::Vector3f(20, 20, 20),
                    .intensity = Eigen::Vector3f(1000, 1000, 1000)};
-const Eigen::Vector3f cameraPos{0, 0, 10};    // camera position
+const Eigen::Vector3f cameraPos{0, 0, 5};     // camera position
 const Eigen::Vector3f cameraLookat{0, 0, -1}; // camera direction
 const Eigen::Vector3f cameraUp{0, 1, 0};      // camera up vector
 
@@ -23,7 +23,7 @@ Eigen::Matrix4f getModelMat(float angle) {
         cos(angle), 0, 0, 0, 0, 1;
 
     Eigen::Matrix4f scale;
-    scale << 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 1;
+    scale << 20, 0, 0, 0, 0, 20, 0, 0, 0, 0, 20, 0, 0, 0, 0, 1;
 
     Eigen::Matrix4f translate;
     translate << 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1;

@@ -160,7 +160,7 @@ void rasterizer::drawTriangle(const Triangle &t, std::array<Eigen::Vector3f, 3> 
                 int ind = get_index(x, y);
                 if (depth_buf[ind] > zp) {
                     depth_buf[ind] = zp;
-                    Eigen::Vector3f interpolated_color = Eigen::Vector3f{178, 34, 34};
+                    Eigen::Vector3f interpolated_color = Eigen::Vector3f{200, 200, 200};
 
                     Eigen::Vector2f interpolated_texcoords =
                         interpolate(alpha, beta, gamma, t.tex(0), t.tex(1), t.tex(2), 1);

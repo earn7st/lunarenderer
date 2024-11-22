@@ -1,3 +1,9 @@
 # lunarenderer
 
-a tiny renderer with no graphic APIs, just for practice :)
+a tiny renderer with no graphic APIs
+
+Samples:
+
+![diablo](/Users/earn/workspace/cg/lunarenderer/images/diablo.png)
+
+​	
