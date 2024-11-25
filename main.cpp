@@ -9,10 +9,11 @@ const float zNear = 1;
 const float zFar = 200;
 
 const float angle = 0;
+const float scaling = 4.0;
 struct light li = {.color = Eigen::Vector3f(255.0, 255.0, 255.0),
                    .position = Eigen::Vector3f(20, 20, 20),
                    .intensity = Eigen::Vector3f(1000, 1000, 1000)};
-const Eigen::Vector3f cameraPos{0, 0, 5};     // camera position
+const Eigen::Vector3f cameraPos{0, 0, 10};    // camera position
 const Eigen::Vector3f cameraLookat{0, 0, -1}; // camera direction
 const Eigen::Vector3f cameraUp{0, 1, 0};      // camera up vector
 
@@ -23,10 +24,10 @@ Eigen::Matrix4f getModelMat(float angle) {
         cos(angle), 0, 0, 0, 0, 1;
 
     Eigen::Matrix4f scale;
-    scale << 20, 0, 0, 0, 0, 20, 0, 0, 0, 0, 20, 0, 0, 0, 0, 1;
+    scale << scaling, 0, 0, 0, 0, scaling, 0, 0, 0, 0, scaling, 0, 0, 0, 0, 1;
 
     Eigen::Matrix4f translate;
-    translate << 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1;
+    translate << 1, 0, 0, 0, 0, 1, 0, 0 * scaling, 0, 0, 1, 0, 0, 0, 0, 1;
 
     return translate * rotation * scale;
 }
@@ -87,7 +88,6 @@ int main(int argc, char **argv) {
     }
     */
 
-    const char *obj_path = "../models/african_head/african_head.obj";
     const char *texture_path =
         "../models/diablo3_pose/diablo3_pose_diffuse.tga";
 
@@ -101,13 +101,12 @@ int main(int argc, char **argv) {
     r.setViewMat(getViewMat(cameraPos, cameraLookat, cameraUp));
     r.setProjMat(getProjMat(FOV, eyeRatio, zNear, zFar));
 
-    if (!strcmp(argv[1], "texture"))
+    if (!strcmp(argv[1], "texture")) {
         active_shader = texture_fragment_shader;
-    else if (!strcmp(argv[1], "phong"))
+        r.setTexture(Texture(texture_path));
+    } else if (!strcmp(argv[1], "phong"))
         active_shader = blinn_phong_fragment_shader;
     r.setFragmentShader(active_shader);
-
-    r.setTexture(Texture(texture_path));
 
     std::vector<Triangle *> triangleList;
 
@@ -137,7 +136,7 @@ int main(int argc, char **argv) {
     FILE *fp = fopen("binary.ppm", "wb");
 
     fprintf(fp, "P6\n%d %d\n255\n", width, height);
-
+    
     for (int x = height - 1; x >= 0; x--) {
         for (int y = 0; y < width; y++) {
             int ind = x * width + y;
