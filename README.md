@@ -8,8 +8,7 @@ Features to be added in the future:
 
 2. normal map
 3. structure development for multiparts models (like models from dota2)
-4. real-time modeling, like the preview in 3d model website
-5. optimized code structure
+4. optimized code structure 
 
 Samples:
 
